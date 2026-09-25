@@ -32,8 +32,6 @@ try {
     // Ambil data dari API MCEasy
     $response = getMceasyData();
 
-
-    // Validasi response
         if (
           !isset($response['data']) ||
           !is_array($response['data'])
@@ -55,323 +53,235 @@ try {
 
     $pdo->beginTransaction();
 
-
     /*
-    |--------------------------------------------------------------------------
-    | UPSERT DATA KE DATABASE LOKAL
-    |--------------------------------------------------------------------------
+            UPSERT DATA KE DATABASE 
     */
 
-    $sql = "
-        INSERT INTO tbl_mceasy (
-
+    $sql = "INSERT INTO tbl_mceasy (
             vehicle_id,
             company_id,
             company_name,
-
             driver_id,
             trip_driver_id,
             driver_name,
-
             license_plate,
             hull_no,
             imei,
-
             latitude,
             longitude,
             altitude,
-
             temperature_1,
             temperature_2,
             temperature_3,
-
             fuel,
             fuel_filtered,
             fuel_capacity,
             sum_fuel,
             trip_fuel,
-
             sum_distance,
             trip_distance,
-
             sum_drivetime,
             trip_drivetime,
-
             sum_drivetime_formatted,
             trip_drivetime_formatted,
-
             speed,
             calculated_speed,
             direction,
-
             signal_strength,
             battery,
-
             harsh_brakes,
             harsh_accels,
             sharp_turns,
             overspeeds,
-
             fence_ctr,
-
             door1_status,
             door2_status,
             refrigerator_status,
-
             trip_maxspeed,
-
             motion_status,
             calculated_motion_status,
-
             engine_on,
             battery_alarm_set,
             gsm_alarm_set,
-
             tripstart_on,
             tripstart_long,
             tripstart_lat,
-
             address,
             province,
             city,
             district,
-
             geolocations,
             vehicle_groups,
             battery_ble,
-
             last_packet,
             last_receive,
             last_motion,
             last_status_chg,
             driver_change_on,
-
             last_door1_data,
             last_door1_alert,
             last_door2_alert,
             last_speed_alert,
             last_summary,
-
-            requested_date
-
-        ) VALUES (
-
+            requested_date) 
+            VALUES (
             :vehicle_id,
             :company_id,
             :company_name,
-
             :driver_id,
             :trip_driver_id,
             :driver_name,
-
             :license_plate,
             :hull_no,
             :imei,
-
             :latitude,
             :longitude,
             :altitude,
-
             :temperature_1,
             :temperature_2,
             :temperature_3,
-
             :fuel,
             :fuel_filtered,
             :fuel_capacity,
             :sum_fuel,
             :trip_fuel,
-
             :sum_distance,
             :trip_distance,
-
             :sum_drivetime,
             :trip_drivetime,
-
             :sum_drivetime_formatted,
             :trip_drivetime_formatted,
-
             :speed,
             :calculated_speed,
             :direction,
-
             :signal_strength,
             :battery,
-
             :harsh_brakes,
             :harsh_accels,
             :sharp_turns,
             :overspeeds,
-
             :fence_ctr,
-
             :door1_status,
             :door2_status,
             :refrigerator_status,
-
             :trip_maxspeed,
-
             :motion_status,
             :calculated_motion_status,
-
             :engine_on,
             :battery_alarm_set,
             :gsm_alarm_set,
-
             :tripstart_on,
             :tripstart_long,
             :tripstart_lat,
-
             :address,
             :province,
             :city,
             :district,
-
             :geolocations,
             :vehicle_groups,
             :battery_ble,
-
             :last_packet,
             :last_receive,
             :last_motion,
             :last_status_chg,
             :driver_change_on,
-
             :last_door1_data,
             :last_door1_alert,
             :last_door2_alert,
             :last_speed_alert,
             :last_summary,
-
             :requested_date
 
-        )
-
-        ON DUPLICATE KEY UPDATE
-
+            )ON DUPLICATE KEY UPDATE
             company_id = VALUES(company_id),
             company_name = VALUES(company_name),
-
             driver_id = VALUES(driver_id),
             trip_driver_id = VALUES(trip_driver_id),
             driver_name = VALUES(driver_name),
-
             license_plate = VALUES(license_plate),
             hull_no = VALUES(hull_no),
             imei = VALUES(imei),
-
             latitude = VALUES(latitude),
             longitude = VALUES(longitude),
             altitude = VALUES(altitude),
-
             temperature_1 = VALUES(temperature_1),
             temperature_2 = VALUES(temperature_2),
             temperature_3 = VALUES(temperature_3),
-
             fuel = VALUES(fuel),
             fuel_filtered = VALUES(fuel_filtered),
             fuel_capacity = VALUES(fuel_capacity),
             sum_fuel = VALUES(sum_fuel),
             trip_fuel = VALUES(trip_fuel),
-
             sum_distance = VALUES(sum_distance),
             trip_distance = VALUES(trip_distance),
-
             sum_drivetime = VALUES(sum_drivetime),
             trip_drivetime = VALUES(trip_drivetime),
-
             sum_drivetime_formatted = VALUES(sum_drivetime_formatted),
             trip_drivetime_formatted = VALUES(trip_drivetime_formatted),
-
             speed = VALUES(speed),
             calculated_speed = VALUES(calculated_speed),
             direction = VALUES(direction),
-
             signal_strength = VALUES(signal_strength),
             battery = VALUES(battery),
-
             harsh_brakes = VALUES(harsh_brakes),
             harsh_accels = VALUES(harsh_accels),
             sharp_turns = VALUES(sharp_turns),
             overspeeds = VALUES(overspeeds),
-
             fence_ctr = VALUES(fence_ctr),
-
             door1_status = VALUES(door1_status),
             door2_status = VALUES(door2_status),
             refrigerator_status = VALUES(refrigerator_status),
-
             trip_maxspeed = VALUES(trip_maxspeed),
-
             motion_status = VALUES(motion_status),
             calculated_motion_status = VALUES(calculated_motion_status),
-
             engine_on = VALUES(engine_on),
             battery_alarm_set = VALUES(battery_alarm_set),
             gsm_alarm_set = VALUES(gsm_alarm_set),
-
             tripstart_on = VALUES(tripstart_on),
             tripstart_long = VALUES(tripstart_long),
             tripstart_lat = VALUES(tripstart_lat),
-
             address = VALUES(address),
             province = VALUES(province),
             city = VALUES(city),
             district = VALUES(district),
-
             geolocations = VALUES(geolocations),
             vehicle_groups = VALUES(vehicle_groups),
             battery_ble = VALUES(battery_ble),
-
             last_packet = VALUES(last_packet),
             last_receive = VALUES(last_receive),
             last_motion = VALUES(last_motion),
             last_status_chg = VALUES(last_status_chg),
             driver_change_on = VALUES(driver_change_on),
-
             last_door1_data = VALUES(last_door1_data),
             last_door1_alert = VALUES(last_door1_alert),
             last_door2_alert = VALUES(last_door2_alert),
             last_speed_alert = VALUES(last_speed_alert),
             last_summary = VALUES(last_summary),
-
             requested_date = VALUES(requested_date),
-
             updated_at = CURRENT_TIMESTAMP
     ";
 
-
-    $stmt = $pdo->prepare($sql);
-
-
-    $processed = 0;
+            $stmt = $pdo->prepare($sql);
+            $processed = 0;
 
 
-    foreach ($vehicles as $vehicle) {
+            foreach ($vehicles as $vehicle) {
 
-        if (!isset($vehicle['vehicleId'])) {
-            continue;
-        }
-
-
+                if (!isset($vehicle['vehicleId'])) {
+                    continue;
+                }
         /*
-        |--------------------------------------------------------------------------
-        | TEMPERATURE
-        |--------------------------------------------------------------------------
+        TEMPERATURE
         */
 
-        $temperature = $vehicle['temperature'] ?? [];
-
-
+        $temperature = $vehicle['temperature'] ?? []; 
         $temperature1 = $temperature[0] ?? null;
         $temperature2 = $temperature[1] ?? null;
         $temperature3 = $temperature[2] ?? null;
 
 
         /*
-        |--------------------------------------------------------------------------
         | DRIVER
-        |--------------------------------------------------------------------------
         */
 
         $driverName =
@@ -380,33 +290,24 @@ try {
 
 
         /*
-        |--------------------------------------------------------------------------
-        | ADDRESS DETAIL
-        |--------------------------------------------------------------------------
+        ADDRESS DETAIL
         */
 
         $addressDetail =
             $vehicle['addressDetail']
             ?? [];
-
-
         $province =
             $addressDetail['province']
             ?? null;
-
         $city =
             $addressDetail['city']
             ?? null;
-
         $district =
             $addressDetail['district']
             ?? null;
 
-
         /*
-        |--------------------------------------------------------------------------
         | JSON FIELD
-        |--------------------------------------------------------------------------
         */
 
         $geolocations = json_encode(
@@ -428,9 +329,7 @@ try {
 
 
         /*
-        |--------------------------------------------------------------------------
-        | INSERT / UPDATE
-        |--------------------------------------------------------------------------
+        INSERT / UPDATE
         */
 
         $stmt->execute([
@@ -521,7 +420,6 @@ try {
             ':trip_drivetime_formatted' =>
                 $vehicle['tripDrivetimeFormatted'] ?? null,
 
-
             ':speed' =>
                 $vehicle['speed'] ?? null,
 
@@ -531,13 +429,11 @@ try {
             ':direction' =>
                 $vehicle['direction'] ?? null,
 
-
             ':signal_strength' =>
                 $vehicle['signalStrength'] ?? null,
 
             ':battery' =>
                 $vehicle['battery'] ?? null,
-
 
             ':harsh_brakes' =>
                 $vehicle['harshBrakes'] ?? null,
@@ -554,7 +450,6 @@ try {
 
             ':fence_ctr' =>
                 $vehicle['fenceCtr'] ?? null,
-
 
             ':door1_status' =>
                 $vehicle['door1Status'] ?? null,
@@ -576,7 +471,6 @@ try {
             ':calculated_motion_status' =>
                 $vehicle['calculatedMotionStatus'] ?? null,
 
-
             ':engine_on' =>
                 $vehicle['engineOn'] ?? null,
 
@@ -586,7 +480,6 @@ try {
             ':gsm_alarm_set' =>
                 $vehicle['gsmAlarmSet'] ?? null,
 
-
             ':tripstart_on' =>
                 toMysqlDatetime($vehicle['tripstartOn'] ?? null),
 
@@ -595,7 +488,6 @@ try {
 
             ':tripstart_lat' =>
                 $vehicle['tripstartLat'] ?? null,
-
 
             ':address' =>
                 $vehicle['address'] ?? null,
@@ -609,7 +501,6 @@ try {
             ':district' =>
                 $district,
 
-
             ':geolocations' =>
                 $geolocations,
 
@@ -618,7 +509,6 @@ try {
 
             ':battery_ble' =>
                 $batteryBle,
-
 
             ':last_packet' =>
                 toMysqlDatetime($vehicle['lastPacket'] ?? null),
@@ -654,37 +544,33 @@ try {
 
             ':requested_date' =>
                 toMysqlDatetime($vehicle['requestedDate'] ?? null)
-
         ]);
-
 
         $processed++;
     }
 
+        $pdo->commit();
 
-    $pdo->commit();
-
-
-    echo json_encode([
-        'success' => true,
-        'message' => 'Sync MCEasy berhasil.',
-        'total_vehicle' => $processed
-    ], JSON_PRETTY_PRINT);
+        echo json_encode([
+            'success' => true,
+            'message' => '200 Sync MCEasy berhasil.',
+            'total_vehicle' => $processed
+        ], JSON_PRETTY_PRINT);
 
 
-} catch (Throwable $e) {
+    } catch (Throwable $e) {
 
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+
+
+        http_response_code(500);
+
+
+        echo json_encode([
+            'success' => false,
+            'message' => 'Sync MCEasy gagal.',
+            'error' => $e->getMessage()
+        ], JSON_PRETTY_PRINT);
     }
-
-
-    http_response_code(500);
-
-
-    echo json_encode([
-        'success' => false,
-        'message' => 'Sync MCEasy gagal.',
-        'error' => $e->getMessage()
-    ], JSON_PRETTY_PRINT);
-}

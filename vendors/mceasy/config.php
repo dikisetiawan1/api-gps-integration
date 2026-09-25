@@ -13,12 +13,12 @@ define(
 );
 
 // Basic Auth untuk API lokal
-define(
-    'API_USERNAME',
-    'admin'
-);
+// define(
+//     'API_USERNAME',
+//     'admin'
+// );
 
-define(
-    'API_PASSWORD',
-    'password123'
-);
+// define(
+//     'API_PASSWORD',
+//     'password123'
+// );
