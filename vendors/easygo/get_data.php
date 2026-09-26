@@ -61,8 +61,5 @@ function getEasygoData()
     return $data;
 }
 
-$data = getEasygoData();
+// $data = getEasygoData();
 
-echo '<pre>';
-print_r($data);
-echo '</pre>';

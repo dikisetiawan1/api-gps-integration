@@ -5,33 +5,29 @@ require_once __DIR__ . '/get_data.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-
-
-
 try {
 
     // Ambil data dari API Easygo
     $response = getEasygoData();
 
         if (
-          !isset($response['data']) ||
-          !is_array($response['data'])
+          !isset($response['Data']) ||
+          !is_array($response['Data'])
       ) {
           throw new Exception('Data kendaraan Easygo tidak ditemukan.');
       }
 
 
       if (
-        !isset($response['data']) ||
-        !is_array($response['data'])
+        !isset($response['Data']) ||
+        !is_array($response['Data'])
     ) {
         throw new Exception(
             'Data kendaraan Easygo tidak ditemukan.'
         );
     }
 
-    $vehicles = $response['data'];
-
+    $vehicles = $response['Data'];
     $pdo->beginTransaction();
 
     /*
@@ -39,505 +35,347 @@ try {
     */
 
     $sql = "INSERT INTO tbl_easygo (
-            vehicle_id,
-            company_id,
-            company_name,
-            driver_id,
-            trip_driver_id,
-            driver_name,
-            license_plate,
-            hull_no,
-            imei,
-            latitude,
-            longitude,
+            acc,
+            addr,
+            alarm_nm,
+            battery_percent,
+            car_model,
+            car_type,
+            company_nm,
             altitude,
-            temperature_1,
-            temperature_2,
-            temperature_3,
-            fuel,
-            fuel_filtered,
-            fuel_capacity,
-            sum_fuel,
-            trip_fuel,
-            sum_distance,
-            trip_distance,
-            sum_drivetime,
-            trip_drivetime,
-            sum_drivetime_formatted,
-            trip_drivetime_formatted,
-            speed,
-            calculated_speed,
+            currentDO,
+            currentGeoAreaStatus,
+            currentGeoLocationStatus,
+            currentStatusVehicle_status,
+            currentStatusVehicle_status_ket,
+            currentStatusVehicle_driving,
+            currentStatusVehicle_parking,
+            currentStatusVehicle_idle_start_time,
+            currentStatusVehicle_idle_stop_time,
+            currentStatusVehicle_idle_duration_value,
+            currentStatusVehicle_idle_duration_text,
+            currentStatusVehicle_idle_lon,
+            currentStatusVehicle_idle_lat,
+            currentStatusVehicle_idle_addr,
+            currentStatusVehicle_idle_geo_location_id,
+            currentStatusVehicle_idle_geo_area_id,
+            currentStatusVehicle_idle_geo_location_nm,
+            currentStatusVehicle_idle_geo_area_nm,
+            currentStatusVehicle_idle_geo_location_code,
+            currentStatusVehicle_idle_geo_area_code,
+            currentStatusVehicle_idle_fuel_consumption,
+            currentStatusVehicle_rfid_driver_value,
+            currentStatusVehicle_rfid_driver_text,
             direction,
-            signal_strength,
-            battery,
-            harsh_brakes,
-            harsh_accels,
-            sharp_turns,
-            overspeeds,
-            fence_ctr,
-            door1_status,
-            door2_status,
-            refrigerator_status,
-            trip_maxspeed,
-            motion_status,
-            calculated_motion_status,
-            engine_on,
-            battery_alarm_set,
-            gsm_alarm_set,
-            tripstart_on,
-            tripstart_long,
-            tripstart_lat,
-            address,
-            province,
-            city,
-            district,
-            geolocations,
-            vehicle_groups,
-            battery_ble,
-            last_packet,
-            last_receive,
-            last_motion,
-            last_status_chg,
-            driver_change_on,
-            last_door1_data,
-            last_door1_alert,
-            last_door2_alert,
-            last_speed_alert,
-            last_summary,
-            requested_date) 
-            VALUES (
-            :vehicle_id,
-            :company_id,
-            :company_name,
-            :driver_id,
-            :trip_driver_id,
-            :driver_name,
-            :license_plate,
-            :hull_no,
-            :imei,
-            :latitude,
-            :longitude,
-            :altitude,
-            :temperature_1,
-            :temperature_2,
-            :temperature_3,
-            :fuel,
-            :fuel_filtered,
-            :fuel_capacity,
-            :sum_fuel,
-            :trip_fuel,
-            :sum_distance,
-            :trip_distance,
-            :sum_drivetime,
-            :trip_drivetime,
-            :sum_drivetime_formatted,
-            :trip_drivetime_formatted,
-            :speed,
-            :calculated_speed,
-            :direction,
-            :signal_strength,
-            :battery,
-            :harsh_brakes,
-            :harsh_accels,
-            :sharp_turns,
-            :overspeeds,
-            :fence_ctr,
-            :door1_status,
-            :door2_status,
-            :refrigerator_status,
-            :trip_maxspeed,
-            :motion_status,
-            :calculated_motion_status,
-            :engine_on,
-            :battery_alarm_set,
-            :gsm_alarm_set,
-            :tripstart_on,
-            :tripstart_long,
-            :tripstart_lat,
-            :address,
-            :province,
-            :city,
-            :district,
-            :geolocations,
-            :vehicle_groups,
-            :battery_ble,
-            :last_packet,
-            :last_receive,
-            :last_motion,
-            :last_status_chg,
-            :driver_change_on,
-            :last_door1_data,
-            :last_door1_alert,
-            :last_door2_alert,
-            :last_speed_alert,
-            :last_summary,
-            :requested_date
+            driver_nm,
+            gps_satelit,
+            gps_sn,
+            gps_time,
+            group_nm,
+            gsm_no,
+            gsm_signal,
+            is_alarm,
+            kec,
+            kode_pos,
+            kota,
+            lat,
+            lon,
+            main_power_voltage,
+            nopol,
+            no_aset,
+            odometer,
+            over_speed_status,
+            provinsi,
+            report_nm,
+            sos,
+            speed,
+            stime,
+            temperatur1,
+            temperatur2,
+            totalkm_mtd_total_km,
+            totalkm_mtd_max_speed,
+            totalkm_mtd_avg_speed,
+            totalkm_mtd_start_date_counting,
+            totalkm_mtd_dur_moving,
+            totalkm_mtd_dur_mov2,
+            totalkm_today_total_km,
+            totalkm_today_max_speed,
+            totalkm_today_avg_speed,
+            totalkm_today_start_date_counting,
+            totalkm_today_dur_moving,
+            totalkm_today_dur_mov2,
+            totalkm_ytd_total_km,
+            totalkm_ytd_max_speed,
+            totalkm_ytd_avg_speed,
+            totalkm_ytd_start_date_counting,
+            totalkm_ytd_dur_moving,
+            totalkm_ytd_dur_mov2
 
-            )ON DUPLICATE KEY UPDATE
-            company_id = VALUES(company_id),
-            company_name = VALUES(company_name),
-            driver_id = VALUES(driver_id),
-            trip_driver_id = VALUES(trip_driver_id),
-            driver_name = VALUES(driver_name),
-            license_plate = VALUES(license_plate),
-            hull_no = VALUES(hull_no),
-            imei = VALUES(imei),
-            latitude = VALUES(latitude),
-            longitude = VALUES(longitude),
+        ) VALUES (
+            :acc,
+            :addr,
+            :alarm_nm,
+            :battery_percent,
+            :car_model,
+            :car_type,
+            :company_nm,
+            :altitude,
+            :currentDO,
+            :currentGeoAreaStatus,
+            :currentGeoLocationStatus,
+            :currentStatusVehicle_status,
+            :currentStatusVehicle_status_ket,
+            :currentStatusVehicle_driving,
+            :currentStatusVehicle_parking,
+            :currentStatusVehicle_idle_start_time,
+            :currentStatusVehicle_idle_stop_time,
+            :currentStatusVehicle_idle_duration_value,
+            :currentStatusVehicle_idle_duration_text,
+            :currentStatusVehicle_idle_lon,
+            :currentStatusVehicle_idle_lat,
+            :currentStatusVehicle_idle_addr,
+            :currentStatusVehicle_idle_geo_location_id,
+            :currentStatusVehicle_idle_geo_area_id,
+            :currentStatusVehicle_idle_geo_location_nm,
+            :currentStatusVehicle_idle_geo_area_nm,
+            :currentStatusVehicle_idle_geo_location_code,
+            :currentStatusVehicle_idle_geo_area_code,
+            :currentStatusVehicle_idle_fuel_consumption,
+            :currentStatusVehicle_rfid_driver_value,
+            :currentStatusVehicle_rfid_driver_text,
+            :direction,
+            :driver_nm,
+            :gps_satelit,
+            :gps_sn,
+            :gps_time,
+            :group_nm,
+            :gsm_no,
+            :gsm_signal,
+            :is_alarm,
+            :kec,
+            :kode_pos,
+            :kota,
+            :lat,
+            :lon,
+            :main_power_voltage,
+            :nopol,
+            :no_aset,
+            :odometer,
+            :over_speed_status,
+            :provinsi,
+            :report_nm,
+            :sos,
+            :speed,
+            :stime,
+            :temperatur1,
+            :temperatur2,
+            :totalkm_mtd_total_km,
+            :totalkm_mtd_max_speed,
+            :totalkm_mtd_avg_speed,
+            :totalkm_mtd_start_date_counting,
+            :totalkm_mtd_dur_moving,
+            :totalkm_mtd_dur_mov2,
+            :totalkm_today_total_km,
+            :totalkm_today_max_speed,
+            :totalkm_today_avg_speed,
+            :totalkm_today_start_date_counting,
+            :totalkm_today_dur_moving,
+            :totalkm_today_dur_mov2,
+            :totalkm_ytd_total_km,
+            :totalkm_ytd_max_speed,
+            :totalkm_ytd_avg_speed,
+            :totalkm_ytd_start_date_counting,
+            :totalkm_ytd_dur_moving,
+            :totalkm_ytd_dur_mov2
+            
+            ) 
+
+            ON DUPLICATE KEY UPDATE
+            acc = VALUES(acc),
+            addr = VALUES(addr),
+            alarm_nm = VALUES(alarm_nm),
+            battery_percent = VALUES(battery_percent),
+            car_model = VALUES(car_model),
+            car_type = VALUES(car_type),
+            company_nm = VALUES(company_nm),
             altitude = VALUES(altitude),
-            temperature_1 = VALUES(temperature_1),
-            temperature_2 = VALUES(temperature_2),
-            temperature_3 = VALUES(temperature_3),
-            fuel = VALUES(fuel),
-            fuel_filtered = VALUES(fuel_filtered),
-            fuel_capacity = VALUES(fuel_capacity),
-            sum_fuel = VALUES(sum_fuel),
-            trip_fuel = VALUES(trip_fuel),
-            sum_distance = VALUES(sum_distance),
-            trip_distance = VALUES(trip_distance),
-            sum_drivetime = VALUES(sum_drivetime),
-            trip_drivetime = VALUES(trip_drivetime),
-            sum_drivetime_formatted = VALUES(sum_drivetime_formatted),
-            trip_drivetime_formatted = VALUES(trip_drivetime_formatted),
-            speed = VALUES(speed),
-            calculated_speed = VALUES(calculated_speed),
+            currentDO = VALUES(currentDO),
+            currentGeoAreaStatus = VALUES(currentGeoAreaStatus),
+            currentGeoLocationStatus = VALUES(currentGeoLocationStatus),
+            currentStatusVehicle_status = VALUES(currentStatusVehicle_status),
+            currentStatusVehicle_status_ket = VALUES(currentStatusVehicle_status_ket),
+            currentStatusVehicle_driving = VALUES(currentStatusVehicle_driving),
+            currentStatusVehicle_parking = VALUES(currentStatusVehicle_parking),
+            currentStatusVehicle_idle_start_time = VALUES(currentStatusVehicle_idle_start_time),
+            currentStatusVehicle_idle_stop_time = VALUES(currentStatusVehicle_idle_stop_time),
+            currentStatusVehicle_idle_duration_value = VALUES(currentStatusVehicle_idle_duration_value),
+            currentStatusVehicle_idle_duration_text = VALUES(currentStatusVehicle_idle_duration_text),
+            currentStatusVehicle_idle_lon = VALUES(currentStatusVehicle_idle_lon),
+            currentStatusVehicle_idle_lat = VALUES(currentStatusVehicle_idle_lat),
+            currentStatusVehicle_idle_addr = VALUES(currentStatusVehicle_idle_addr),
+            currentStatusVehicle_idle_geo_location_id = VALUES(currentStatusVehicle_idle_geo_location_id),
+            currentStatusVehicle_idle_geo_area_id = VALUES(currentStatusVehicle_idle_geo_area_id),
+            currentStatusVehicle_idle_geo_location_nm = VALUES(currentStatusVehicle_idle_geo_location_nm),
+            currentStatusVehicle_idle_geo_area_nm = VALUES(currentStatusVehicle_idle_geo_area_nm),
+            currentStatusVehicle_idle_geo_location_code = VALUES(currentStatusVehicle_idle_geo_location_code),
+            currentStatusVehicle_idle_geo_area_code = VALUES(currentStatusVehicle_idle_geo_area_code),
+            currentStatusVehicle_idle_fuel_consumption = VALUES(currentStatusVehicle_idle_fuel_consumption),
+            currentStatusVehicle_rfid_driver_value = VALUES(currentStatusVehicle_rfid_driver_value),
+            currentStatusVehicle_rfid_driver_text = VALUES(currentStatusVehicle_rfid_driver_text),
             direction = VALUES(direction),
-            signal_strength = VALUES(signal_strength),
-            battery = VALUES(battery),
-            harsh_brakes = VALUES(harsh_brakes),
-            harsh_accels = VALUES(harsh_accels),
-            sharp_turns = VALUES(sharp_turns),
-            overspeeds = VALUES(overspeeds),
-            fence_ctr = VALUES(fence_ctr),
-            door1_status = VALUES(door1_status),
-            door2_status = VALUES(door2_status),
-            refrigerator_status = VALUES(refrigerator_status),
-            trip_maxspeed = VALUES(trip_maxspeed),
-            motion_status = VALUES(motion_status),
-            calculated_motion_status = VALUES(calculated_motion_status),
-            engine_on = VALUES(engine_on),
-            battery_alarm_set = VALUES(battery_alarm_set),
-            gsm_alarm_set = VALUES(gsm_alarm_set),
-            tripstart_on = VALUES(tripstart_on),
-            tripstart_long = VALUES(tripstart_long),
-            tripstart_lat = VALUES(tripstart_lat),
-            address = VALUES(address),
-            province = VALUES(province),
-            city = VALUES(city),
-            district = VALUES(district),
-            geolocations = VALUES(geolocations),
-            vehicle_groups = VALUES(vehicle_groups),
-            battery_ble = VALUES(battery_ble),
-            last_packet = VALUES(last_packet),
-            last_receive = VALUES(last_receive),
-            last_motion = VALUES(last_motion),
-            last_status_chg = VALUES(last_status_chg),
-            driver_change_on = VALUES(driver_change_on),
-            last_door1_data = VALUES(last_door1_data),
-            last_door1_alert = VALUES(last_door1_alert),
-            last_door2_alert = VALUES(last_door2_alert),
-            last_speed_alert = VALUES(last_speed_alert),
-            last_summary = VALUES(last_summary),
-            requested_date = VALUES(requested_date),
-            updated_at = CURRENT_TIMESTAMP
-    ";
+            driver_nm = VALUES(driver_nm),
+            gps_satelit = VALUES(gps_satelit),
+            gps_sn = VALUES(gps_sn),
+            gps_time = VALUES(gps_time),
+            group_nm = VALUES(group_nm),
+            gsm_no = VALUES(gsm_no),
+            gsm_signal = VALUES(gsm_signal),
+            is_alarm = VALUES(is_alarm),
+            kec = VALUES(kec),
+            kode_pos = VALUES(kode_pos),
+            kota = VALUES(kota),
+            lat = VALUES(lat),
+            lon = VALUES(lon),
+            main_power_voltage = VALUES(main_power_voltage),
+            nopol = VALUES(nopol),
+            no_aset = VALUES(no_aset),
+            odometer = VALUES(odometer),
+            over_speed_status = VALUES(over_speed_status),
+            provinsi = VALUES(provinsi),
+            report_nm = VALUES(report_nm),
+            sos = VALUES(sos),
+            speed = VALUES(speed),
+            stime = VALUES(stime),
+            temperatur1 = VALUES(temperatur1),
+            temperatur2 = VALUES(temperatur2),
+            totalkm_mtd_total_km = VALUES(totalkm_mtd_total_km),
+            totalkm_mtd_max_speed = VALUES(totalkm_mtd_max_speed),
+            totalkm_mtd_avg_speed = VALUES(totalkm_mtd_avg_speed),
+            totalkm_mtd_start_date_counting = VALUES(totalkm_mtd_start_date_counting),
+            totalkm_mtd_dur_moving = VALUES(totalkm_mtd_dur_moving),
+            totalkm_mtd_dur_mov2 = VALUES(totalkm_mtd_dur_mov2),
+            totalkm_today_total_km = VALUES(totalkm_today_total_km),
+            totalkm_today_max_speed = VALUES(totalkm_today_max_speed),
+            totalkm_today_avg_speed = VALUES(totalkm_today_avg_speed),
+            totalkm_today_start_date_counting = VALUES(totalkm_today_start_date_counting),
+            totalkm_today_dur_moving = VALUES(totalkm_today_dur_moving),
+            totalkm_today_dur_mov2 = VALUES(totalkm_today_dur_mov2),
+            totalkm_ytd_total_km = VALUES(totalkm_ytd_total_km),
+            totalkm_ytd_max_speed = VALUES(totalkm_ytd_max_speed),
+            totalkm_ytd_avg_speed = VALUES(totalkm_ytd_avg_speed),
+            totalkm_ytd_start_date_counting = VALUES(totalkm_ytd_start_date_counting),
+            totalkm_ytd_dur_moving = VALUES(totalkm_ytd_dur_moving),
+            totalkm_ytd_dur_mov2 = VALUES(totalkm_ytd_dur_mov2)
+        ";
 
             $stmt = $pdo->prepare($sql);
             $processed = 0;
 
-
             foreach ($vehicles as $vehicle) {
 
-                if (!isset($vehicle['vehicleId'])) {
+                if (!isset($vehicle['nopol'])) {
                     continue;
                 }
-        /*
-        TEMPERATURE
-        */
-
-        $temperature = $vehicle['temperature'] ?? []; 
-        $temperature1 = $temperature[0] ?? null;
-        $temperature2 = $temperature[1] ?? null;
-        $temperature3 = $temperature[2] ?? null;
-
-
-        /*
-        | DRIVER
-        */
-
-        $driverName =
-            $vehicle['driver1']['fullname']
-            ?? null;
-
-
-        /*
-        ADDRESS DETAIL
-        */
-
-        $addressDetail =
-            $vehicle['addressDetail']
-            ?? [];
-        $province =
-            $addressDetail['province']
-            ?? null;
-        $city =
-            $addressDetail['city']
-            ?? null;
-        $district =
-            $addressDetail['district']
-            ?? null;
-
-        /*
-        | JSON FIELD
-        */
-
-        $geolocations = json_encode(
-            $vehicle['geolocations'] ?? [],
-            JSON_UNESCAPED_UNICODE
-        );
-
-
-        $vehicleGroups = json_encode(
-            $vehicle['vehicleGroups'] ?? [],
-            JSON_UNESCAPED_UNICODE
-        );
-
-
-        $batteryBle = json_encode(
-            $vehicle['batteryBLE'] ?? [],
-            JSON_UNESCAPED_UNICODE
-        );
-
-
-        /*
-        INSERT / UPDATE
-        */
-
-        $stmt->execute([
-
-            ':vehicle_id' =>
-                $vehicle['vehicleId'] ?? null,
-
-            ':company_id' =>
-                $vehicle['companyId'] ?? null,
-
-            ':company_name' =>
-                $vehicle['companyName'] ?? null,
-
-
-            ':driver_id' =>
-                $vehicle['driverId'] ?? null,
-
-            ':trip_driver_id' =>
-                $vehicle['tripDriverId'] ?? null,
-
-            ':driver_name' =>
-                $driverName,
-
-
-            ':license_plate' =>
-                $vehicle['licensePlate'] ?? null,
-
-            ':hull_no' =>
-                $vehicle['hullNo'] ?? null,
-
-            ':imei' =>
-                $vehicle['imei'] ?? null,
-
-
-            ':latitude' =>
-                $vehicle['latitude'] ?? null,
-
-            ':longitude' =>
-                $vehicle['longitude'] ?? null,
-
-            ':altitude' =>
-                $vehicle['altitude'] ?? null,
-
-
-            ':temperature_1' =>
-                $temperature1,
-
-            ':temperature_2' =>
-                $temperature2,
-
-            ':temperature_3' =>
-                $temperature3,
-
-
-            ':fuel' =>
-                $vehicle['fuel'] ?? null,
-
-            ':fuel_filtered' =>
-                $vehicle['fuelFiltered'] ?? null,
-
-            ':fuel_capacity' =>
-                $vehicle['fuelCapacity'] ?? null,
-
-            ':sum_fuel' =>
-                $vehicle['sumFuel'] ?? null,
-
-            ':trip_fuel' =>
-                $vehicle['tripFuel'] ?? null,
-
-
-            ':sum_distance' =>
-                $vehicle['sumDistance'] ?? null,
-
-            ':trip_distance' =>
-                $vehicle['tripDistance'] ?? null,
-
-
-            ':sum_drivetime' =>
-                $vehicle['sumDrivetime'] ?? null,
-
-            ':trip_drivetime' =>
-                $vehicle['tripDrivetime'] ?? null,
-
-
-            ':sum_drivetime_formatted' =>
-                $vehicle['sumDrivetimeFormatted'] ?? null,
-
-            ':trip_drivetime_formatted' =>
-                $vehicle['tripDrivetimeFormatted'] ?? null,
-
-            ':speed' =>
-                $vehicle['speed'] ?? null,
-
-            ':calculated_speed' =>
-                $vehicle['calculatedSpeed'] ?? null,
-
-            ':direction' =>
-                $vehicle['direction'] ?? null,
-
-            ':signal_strength' =>
-                $vehicle['signalStrength'] ?? null,
-
-            ':battery' =>
-                $vehicle['battery'] ?? null,
-
-            ':harsh_brakes' =>
-                $vehicle['harshBrakes'] ?? null,
-
-            ':harsh_accels' =>
-                $vehicle['harshAccels'] ?? null,
-
-            ':sharp_turns' =>
-                $vehicle['sharpTurns'] ?? null,
-
-            ':overspeeds' =>
-                $vehicle['overspeeds'] ?? null,
-
-
-            ':fence_ctr' =>
-                $vehicle['fenceCtr'] ?? null,
-
-            ':door1_status' =>
-                $vehicle['door1Status'] ?? null,
-
-            ':door2_status' =>
-                $vehicle['door2Status'] ?? null,
-
-            ':refrigerator_status' =>
-                $vehicle['refrigeratorStatus'] ?? null,
-
-
-            ':trip_maxspeed' =>
-                $vehicle['tripMaxspeed'] ?? null,
-
-
-            ':motion_status' =>
-                $vehicle['motionStatus'] ?? null,
-
-            ':calculated_motion_status' =>
-                $vehicle['calculatedMotionStatus'] ?? null,
-
-            ':engine_on' =>
-                $vehicle['engineOn'] ?? null,
-
-            ':battery_alarm_set' =>
-                $vehicle['batteryAlarmSet'] ?? null,
-
-            ':gsm_alarm_set' =>
-                $vehicle['gsmAlarmSet'] ?? null,
-
-            ':tripstart_on' =>
-                toMysqlDatetime($vehicle['tripstartOn'] ?? null),
-
-            ':tripstart_long' =>
-                $vehicle['tripstartLong'] ?? null,
-
-            ':tripstart_lat' =>
-                $vehicle['tripstartLat'] ?? null,
-
-            ':address' =>
-                $vehicle['address'] ?? null,
-
-            ':province' =>
-                $province,
-
-            ':city' =>
-                $city,
-
-            ':district' =>
-                $district,
-
-            ':geolocations' =>
-                $geolocations,
-
-            ':vehicle_groups' =>
-                $vehicleGroups,
-
-            ':battery_ble' =>
-                $batteryBle,
-
-            ':last_packet' =>
-                toMysqlDatetime($vehicle['lastPacket'] ?? null),
-
-            ':last_receive' =>
-                toMysqlDatetime($vehicle['lastReceive'] ?? null),
-
-            ':last_motion' =>
-                toMysqlDatetime($vehicle['lastMotion'] ?? null),
-
-            ':last_status_chg' =>
-                toMysqlDatetime($vehicle['lastStatusChg'] ?? null),
-
-            ':driver_change_on' =>
-                toMysqlDatetime($vehicle['driverChangeOn'] ?? null),
-
-
-            ':last_door1_data' =>
-                toMysqlDatetime($vehicle['lastDoor1Data'] ?? null),
-
-            ':last_door1_alert' =>
-                toMysqlDatetime($vehicle['lastDoor1Alert'] ?? null),
-
-            ':last_door2_alert' =>
-                toMysqlDatetime($vehicle['lastDoor2Alert'] ?? null),
-
-            ':last_speed_alert' =>
-                toMysqlDatetime($vehicle['lastSpeedAlert'] ?? null),
-
-            ':last_summary' =>
-                toMysqlDatetime($vehicle['lastSummary'] ?? null),
-
-
-            ':requested_date' =>
-                toMysqlDatetime($vehicle['requestedDate'] ?? null)
-        ]);
+                
+            $status = $vehicle['currentStatusVehicle'] ?? [];
+            $idle = $status['idle'] ?? [];
+            $rfid = $status['rfid_driver'] ?? [];
+
+            $mtd = $vehicle['totalkm_mtd'] ?? [];
+            $today = $vehicle['totalkm_today'] ?? [];
+            $ytd = $vehicle['totalkm_ytd'] ?? [];
+
+            $driving = $status['driving'] ?? null;
+            $parking = $status['parking'] ?? null;
+            $moving  = $status['moving'] ?? null;
+
+            $stmt->execute([
+                ':acc' => $vehicle['acc'] ?? null,
+                ':addr' => is_array($vehicle['addr'] ?? null) ? json_encode($vehicle['addr'], JSON_UNESCAPED_UNICODE) : ($vehicle['addr'] ?? null),
+                ':alarm_nm' => $vehicle['alarm_nm'] ?? null,
+                ':battery_percent' => $vehicle['battery_percent'] ?? null,
+                ':car_model' => $vehicle['car_model'] ?? null,
+                ':car_type' => $vehicle['car_type'] ?? null,
+                ':company_nm' => $vehicle['company_nm'] ?? null,
+                ':altitude' => $vehicle['altitude'] ?? null,
+                ':currentDO' => $vehicle['currentDO'] ?? null,
+                ':currentGeoAreaStatus' => is_array($vehicle['currentGeoAreaStatus'] ?? null) ? json_encode($vehicle['currentGeoAreaStatus'], JSON_UNESCAPED_UNICODE): ($vehicle['currentGeoAreaStatus'] ?? null),
+                ':currentGeoLocationStatus' => is_array($vehicle['currentGeoLocationStatus'] ?? null) ? json_encode($vehicle['currentGeoLocationStatus'], JSON_UNESCAPED_UNICODE): ($vehicle['currentGeoLocationStatus'] ?? null),
+                ':currentStatusVehicle_status' => is_array($status['status'] ?? null) ? json_encode($status['status'], JSON_UNESCAPED_UNICODE): ($status['status'] ?? null),
+                ':currentStatusVehicle_status_ket' => is_array($status['ket'] ?? null) ? json_encode($status['ket'], JSON_UNESCAPED_UNICODE): ($status['ket'] ?? null),
+                ':currentStatusVehicle_driving' => is_array($status['driving'] ?? null)? json_encode($status['driving'], JSON_UNESCAPED_UNICODE):($status['driving'] ?? null),
+                ':currentStatusVehicle_parking' => is_array($status['parking'] ?? null) ? json_encode($status['parking'], JSON_UNESCAPED_UNICODE):($status['parking'] ?? null),
+                ':currentStatusVehicle_idle_start_time' => $idle['start_time'] ?? null,
+                ':currentStatusVehicle_idle_stop_time' => $idle['stop_time'] ?? null,
+                ':currentStatusVehicle_idle_duration_value' => $idle['duration']['value'] ?? null,
+                ':currentStatusVehicle_idle_duration_text' => $idle['duration']['text'] ?? null,
+                ':currentStatusVehicle_idle_lon' => $idle['lon'] ?? null,
+                ':currentStatusVehicle_idle_lat' => $idle['lat'] ?? null,
+                ':currentStatusVehicle_idle_addr' => $idle['addr'] ?? null,
+                ':currentStatusVehicle_idle_geo_location_id' => $idle['geo_location_id'] ?? null,
+                ':currentStatusVehicle_idle_geo_area_id' => $idle['geo_area_id'] ?? null,
+                ':currentStatusVehicle_idle_geo_location_nm' => $idle['geo_location_nm'] ?? null,
+                ':currentStatusVehicle_idle_geo_area_nm' => $idle['geo_area_nm'] ?? null,
+                ':currentStatusVehicle_idle_geo_location_code' => $idle['geo_location_code'] ?? null,
+                ':currentStatusVehicle_idle_geo_area_code' => $idle['geo_area_code'] ?? null,
+                ':currentStatusVehicle_idle_fuel_consumption' => $idle['fuel_consumption'] ?? null,
+                ':currentStatusVehicle_rfid_driver_value' => $rfid['value'] ?? null,
+                ':currentStatusVehicle_rfid_driver_text' => $rfid['text'] ?? null,
+                ':direction' => $vehicle['direction'] ?? null,
+                ':driver_nm' => $vehicle['driver_nm'] ?? null,
+                ':gps_satelit' => $vehicle['gps_satelit'] ?? null,
+                ':gps_sn' => $vehicle['gps_sn'] ?? null,
+                ':gps_time' => $vehicle['gps_time'] ?? null,
+                ':group_nm' => $vehicle['group_nm'] ?? null,
+                ':gsm_no' => $vehicle['gsm_no'] ?? null,
+                ':gsm_signal' => $vehicle['gsm_signal'] ?? null,
+                ':is_alarm' => $vehicle['is_alarm'] ?? null,
+                ':kec' => $vehicle['kec'] ?? null,
+                ':kode_pos' => $vehicle['kode_pos'] ?? null,
+                ':kota' => $vehicle['kota'] ?? null,
+                ':lat' => $vehicle['lat'] ?? null,
+                ':lon' => $vehicle['lon'] ?? null,
+                ':main_power_voltage' => $vehicle['main_power_voltage'] ?? null,
+                ':nopol' => $vehicle['nopol'] ?? null,
+                ':no_aset' => $vehicle['no_aset'] ?? null,
+                ':odometer' => $vehicle['odometer'] ?? null,
+                ':over_speed_status' => $vehicle['overSpeedStatus'] ?? null,
+                ':provinsi' => $vehicle['provinsi'] ?? null,
+                ':report_nm' => $vehicle['report_nm'] ?? null,
+                ':sos' => $vehicle['sos'] ?? null,
+                ':speed' => $vehicle['speed'] ?? null,
+                ':stime' => $vehicle['stime'] ?? null,
+                ':temperatur1' => $vehicle['temperatur1'] ?? null,
+                ':temperatur2' => $vehicle['temperatur2'] ?? null,
+                ':totalkm_mtd_total_km' => $mtd['total_km'] ?? null,
+                ':totalkm_mtd_max_speed' => $mtd['max_speed'] ?? null,
+                ':totalkm_mtd_avg_speed' => $mtd['avg_speed'] ?? null,
+                ':totalkm_mtd_start_date_counting' => $mtd['start_date_counting'] ?? null,
+                ':totalkm_mtd_dur_moving' => $mtd['dur_moving'] ?? null,
+                ':totalkm_mtd_dur_mov2' => $mtd['durMov2'] ?? null,
+                ':totalkm_today_total_km' => $today['total_km'] ?? null,
+                ':totalkm_today_max_speed' => $today['max_speed'] ?? null,
+                ':totalkm_today_avg_speed' => $today['avg_speed'] ?? null,
+                ':totalkm_today_start_date_counting' => $today['start_date_counting'] ?? null,
+                ':totalkm_today_dur_moving' => $today['dur_moving'] ?? null,
+                ':totalkm_today_dur_mov2' => $today['durMov2'] ?? null,
+                ':totalkm_ytd_total_km' => $ytd['total_km'] ?? null,
+                ':totalkm_ytd_max_speed' => $ytd['max_speed'] ?? null,
+                ':totalkm_ytd_avg_speed' => $ytd['avg_speed'] ?? null,
+                ':totalkm_ytd_start_date_counting' => $ytd['start_date_counting'] ?? null,
+                ':totalkm_ytd_dur_moving' => $ytd['dur_moving'] ?? null,
+                ':totalkm_ytd_dur_mov2' => $ytd['durMov2'] ?? null
+            ]);
 
         $processed++;
-    }
-
+        }
         $pdo->commit();
 
-        echo json_encode([
+      echo json_encode([
             'success' => true,
             'message' => '200 Sync Easygo berhasil.',
             'total_vehicle' => $processed
         ], JSON_PRETTY_PRINT);
-
 
     } catch (Throwable $e) {
 
@@ -545,9 +383,7 @@ try {
             $pdo->rollBack();
         }
 
-
         http_response_code(500);
-
 
         echo json_encode([
             'success' => false,
